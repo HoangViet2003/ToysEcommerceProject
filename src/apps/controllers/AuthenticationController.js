@@ -1,4 +1,5 @@
 const User = require("../../models/User");
+const Cart = require("../../models/Cart");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -12,6 +13,11 @@ class AuthenticationController {
         password: hashedPassword,
         email,
       });
+
+      //create a cart for new user
+      const cart = new Cart({ user_id: user._id });
+      await cart.save();
+      
       res.status(200).json(user);
     } catch (err) {
       res.status(400).json({ error: "ERROR!!!" });

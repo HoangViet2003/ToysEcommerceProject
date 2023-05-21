@@ -11,9 +11,9 @@ async function connect() {
         // useCreateIndex: true,
       }
     );
-    console.log("Connect successfully!!!");
+    console.log("Connect db successfully!!!");
   } catch (error) {
-    console.log("Connect failure!!!");
+    console.log("Connect db failure!!!");
   } 
 }
 
