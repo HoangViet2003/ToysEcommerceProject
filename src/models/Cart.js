@@ -3,11 +3,13 @@ const Schema = mongoose.Schema;
 
 const Cart = new Schema(
   {
-    user_id: { type: String, required: true },
-    products:[{
+    user_id: { type: String },
+    products: [
+      {
         product_id: { type: String, required: true },
         quantity: { type: Number, default: 1 },
-    }]
+      },
+    ],
   },
   { timestamps: true }
 );

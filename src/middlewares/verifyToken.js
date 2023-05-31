@@ -12,13 +12,13 @@ const verifyToken = (req, res, next) => {
                 next();
             });
         }else{
-            res.status(401).json({ error: "Unauthorized" });
+            res.status(401).json({ error: "Unauthorized" }); 
         }
  } 
 
  const verifyTokenAndAuthorization = (req, res, next) => {
     verifyToken(req, res, () => {
-        if(req.user.id === req.params.id || req.user.isAdmin){
+        if(req.user.user_id === req.params.user_id || req.user.isAdmin){
             next();
         }else{
             res.status(403).json({ error: "Forbidden" });
