@@ -6,6 +6,7 @@ const upload = require("../middlewares/upload");
 
 // router.use('/:slug', siteController.show);
 router.get("/allproduct", productController.index);
+router.get("/getallproductwithoutlimit",verifyTokenAndAdmin ,productController.getProductWithoutLimit);
 router.get("/search", productController.search);
 router.post(
   "/create",
@@ -13,9 +14,9 @@ router.post(
   upload.array("images"),
   productController.store
 );
-router.put("/update/:id", verifyTokenAndAdmin, productController.update);
+router.put("/update/:id", verifyTokenAndAdmin,upload.array("images"), productController.update);
 router.delete("/delete/:id", verifyTokenAndAdmin, productController.delete);
-router.get("/:id", productController.show);
+router.delete("/:id",verifyTokenAndAdmin, productController.show);
 
 
 module.exports = router;

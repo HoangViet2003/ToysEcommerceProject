@@ -5,10 +5,11 @@ class CartController {
   //get cart by user id
   async show(req, res, next) {
     try {
-      const cart = await Cart.findOne({ user_id: req.params.user_id });
+      const cart = await Cart.findOne({ user_id: req.user.user_id });
+      if(!cart) return res.status(404).json({ error: "Cart not found" });
       res.status(200).json(cart);
     } catch (err) {
-      res.status(404).json({ error: "Cart not found" });
+      res.status(500).json({ error: "Server error" });
     }
   }
 
