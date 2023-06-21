@@ -41,10 +41,10 @@ class OrderController {
         await product.save();
       });
 
-    //   if(order){
-    //     //empty cart
-    //     cart.products = [];
-    //   }
+      if(order){
+        //empty cart
+        cart.products = [];
+      }
 
       // const order = new Order();
       // order.user_id = user_id;
