@@ -18,14 +18,12 @@ class OrderController {
     try {
       const { user_id } = req.user;
       const { total } = req.body;
-      // const {product_id,quantity} = req.body
       // check if user has cart
-      const cart = await Cart.findOne({ user_id: user_id });
-      if (!cart) return res.status(404).json({ error: "Cannot add order" });
+      const cart = await Cart.findOne({ user_id: req.user.user_id });
+      if (!cart) return res.status(404).json({ error: "Cannot find cart" });
       //add products in cart to order
       const order = new Order();
       order.user_id = user_id;
-    //   order.products = cart.products;
         //push all product in cart to order
         cart.products.forEach((item) => {
             order.products.push(item);
@@ -33,34 +31,23 @@ class OrderController {
       order.total = total;
 
       //find product and update quantity
-      cart.products.forEach(async (item) => {
-        const product = await Product.findOne({ _id: item.product_id });
+      cart.products.forEach( (item) => {
+        const product =  Product.findOne({ _id: item.product_id });
         if (product.quantity < item.quantity)
           return res.status(404).json({ error: "Cannot add order" });
         product.quantity = product.quantity - item.quantity;
-        await product.save();
+         product.save();
       });
 
-      if(order){
-        //empty cart
-        cart.products = [];
-      }
+     
+      cart.products = [];
 
-      // const order = new Order();
-      // order.user_id = user_id;
-      // // add to products array
-      // order.products = [{product_id,quantity}];
-
-      // const product = await Product.findOne({ _id: product_id });
-      // if(product.quantity < req.body.quantity) return res.status(404).json({ error: "Cannot add order" })
-      // product.quantity = product.quantity - req.body.quantity;
-      // const price = product.price;
-      // order.total = price * req.body.quantity;
-
+  
+      await cart.save();
       await order.save();
       res.status(200).json(order);
     } catch (err) {
-      res.status(400).json({ error: "You need to fill correct information" });
+      res.status(500).json( err );
     }
   }
 
