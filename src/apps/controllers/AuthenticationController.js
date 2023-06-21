@@ -6,12 +6,13 @@ const jwt = require("jsonwebtoken");
 class AuthenticationController {
   async register(req, res) {
     try {
-      const { username, password, email } = req.body;
+      const { username, password, email,isAdmin } = req.body;
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = await User.create({
         username,
         password: hashedPassword,
         email,
+        isAdmin,
       });
 
       //create a cart for new user

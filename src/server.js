@@ -10,6 +10,11 @@ require("dotenv").config();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+ app.all("/", function (req, res, next) {
+   res.header("Access-Control-Allow-Origin", "*");
+   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+   next();
+ });
 // app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/images", express.static("src/images"));

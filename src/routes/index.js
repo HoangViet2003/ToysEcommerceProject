@@ -5,7 +5,6 @@ const productRouter = require("./product");
 const cartRouter = require("./cart");
 const orderRouter = require("./order");
 
-
 function route(app) {
   app.use("/api/auth", authRouter);
   app.use("/api/user", userRouter);
