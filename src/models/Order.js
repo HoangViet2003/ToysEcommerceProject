@@ -1,3 +1,5 @@
+//write a function so filter order according time stamp
+
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -14,6 +16,7 @@ const Order = new Schema(
     is_confirmed: { type: Boolean, default: false },
   },
   { timestamps: true }
+
 );
 
 module.exports = mongoose.model("Order", Order);
